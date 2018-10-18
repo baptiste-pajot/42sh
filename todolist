@@ -6,29 +6,45 @@
 #    By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/08/22 09:27:21 by bpajot       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/25 17:12:38 by kcabus      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/15 13:41:12 by bpajot      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 kcabus :
+- gestion tabulation avec Ctrl+v Tab ?
+- gestion /n etc
 
 bpajot :
-- wc | ls OK - yes | head OK salement
-- ls | xargs cat OK
-- cat 21sh OK
-- message erreur si segfault ou autre signal  OK
-- leaks OK ?
-- norminette en cours OK
-- debug affichage via arg "debug" si bespom
+- gestion des exceptions plus propre pour sigpipe
+- gestion du fork pour exit setenv unsetenv cd
+- gestion du ctrl-D pour les commandes avec entree standard ouvert
+- echo $a$b $a"$b"
+- $ a refaire invalid read size pour une variable unset plus cd bizarre
+- cat << kk > l < dddd > test ne pas creer test car erreur avant
+- echo " dquote> \ dquote>"
+- > test redir sans commandes
+- exit avec && || a opti
+- cd gestion lien symbolique
+- revoir fg plus safe emacs ou autre
+- afficher message si PATH=/ et commande not found
+- env a revoir pour env -i ls et env env -i ls
 
 other :
+- leaks  voir prk 32leaks avec valgrind + still reachable ?
+- norminette 
 - arg derriere redir a gerer ?
 - effacer .heredoc
+- cd -P -L
+- echo -n -e -E
+- env ???
+- gestion propre ctrl-z pour cat ou emacs??
 
-- leaks au niveau de la fonction check_builtin.c -> run_builtin :
-	non free des arguments une fois utilises
-- lors d'un ctrl + c affichage supplementaire
+
+bonus :
+- kcabus history et !
+- bpajot les variables locales $ set unset export
+
 _______________________________________________________________________________
 nota-bene :
 - le prompt du bash est masqué par le 2> /dev/null

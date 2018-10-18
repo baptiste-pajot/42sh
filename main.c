@@ -6,7 +6,7 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/22 15:06:26 by bpajot       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 09:41:35 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/17 13:59:29 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,7 +60,6 @@ static void		ft_exit(int *a, char *arg)
 		*a = 0;
 	else
 	{
-		ft_printf("21sh: exit: %s: numeric argument required\n", arg);
 		ft_putstr_fd("21sh: exit: ", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
@@ -149,5 +148,6 @@ int				main(int argc, char *argv[], char *env[])
 			main2(string, &my_env, &a, 0);
 	}
 	ft_free_tab(&my_env);
+	ft_close_hist(CLOSE_HIST, NULL);
 	return (a);
 }
