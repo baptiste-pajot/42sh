@@ -6,7 +6,7 @@
 #    By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/04/06 14:53:11 by kcabus       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/14 13:36:49 by kcabus      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/11/30 12:37:39 by volivry     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -56,13 +56,20 @@ N_SRCS =	ft_edition.c			\
 			ft_del_end_to_i.c		\
 			ft_ring_the_bell.c		\
 			ft_delta_line.c			\
-			ft_goto_i_from_end.c
+			ft_goto_i_from_end.c	\
+			ft_file_to_list.c		\
+			ft_list_to_file.c		\
+			ft_replace_line.c		\
+			ft_parse_excl.c			\
+			ft_parse_excl2.c		\
+			ft_replace_s.c			\
+			ft_verif_histsize.c
 
 all : $(NAME)
 
 $(NAME):	$(OBJ)
 			@ar rc $(NAME) $(OBJ)
-			@printf "\033[33m edition OK ! \n\033[0m"
+			@printf "\033[33;5m edition OK ! \n\033[0m"
 
 $(OBJ_PATH)%.o:	$(SRC_PATH)%.c
 				@mkdir -p $(OBJ_PATH)

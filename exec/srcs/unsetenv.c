@@ -6,14 +6,14 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/06 15:06:04 by bpajot       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 16:12:17 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/21 20:13:10 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static int	ft_doublon3(char *line, char **arg)
+int			ft_doublon3(char *line, char **arg)
 {
 	int		i;
 	char	*p;
@@ -61,7 +61,7 @@ static int	ft_doublon2(char *line, char **arg)
 	return (0);
 }
 
-static int	ft_tab_size2(char **arg)
+int			ft_tab_size2(char **arg)
 {
 	int		i;
 
@@ -79,7 +79,7 @@ static int	ft_tab_size2(char **arg)
 ** cree un nouveau tableau env2 avec la var en moins
 */
 
-static char	**ft_unsetenv2(char **arg, char **env, int nb_double)
+char		**ft_unsetenv2(char **arg, char **env, int nb_double)
 {
 	char	**env2;
 	int		i;

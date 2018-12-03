@@ -6,7 +6,7 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/25 17:29:56 by bpajot       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 09:56:17 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/03 09:52:02 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,12 +29,18 @@ static void		ft_go_to_end(t_navig *n)
 
 static void		ft_signal_ctrl_c(int s)
 {
+	t_navig	*info;
+
+	if (g_slct && g_slct->next && g_slct->next != g_slct)
+		return ;
+	info = &g_nav;
 	(void)s;
 	if (g_nav.statut)
 		ft_go_to_end(&g_nav);
 	ft_putendl("");
 	if (g_nav.statut)
 	{
+		ft_putendl("");
 		ft_strdel(&(g_nav.s));
 		ft_strdel(&(g_nav.s_save));
 		ft_init_nav(&g_nav, g_nav.prompt);
@@ -48,12 +54,14 @@ static void		ft_signal_ctrl_c(int s)
 static void		ft_signal_stop(int s)
 {
 	(void)s;
+	if (g_slct && g_slct->next && g_slct->next != g_slct)
+		return ;
 	if (g_nav.statut)
 	{
 		ft_putendl("");
 		ft_strdel(&(g_nav.s));
 		ft_strdel(&(g_nav.s_save));
-		ft_init_nav(&g_nav, "42sh $> ");
+		ft_init_nav(&g_nav, g_nav.prompt);
 	}
 }
 
@@ -66,7 +74,9 @@ static void		ft_signal_stop(int s)
 void			manage_signal(void)
 {
 	setlocale(LC_ALL, "");
+	ft_printf("%C Le bool%Cen\n", L'©', L'é');
 	ft_printf("%C kcabus\n%C bpajot\n", L'©', L'©');
+	ft_printf("%C volivry\n%C yoginet\n", L'©', L'©');
 	signal(SIGINT, ft_signal_ctrl_c);
 	signal(SIGTSTP, ft_signal_stop);
 	signal(SIGCONT, SIG_IGN);

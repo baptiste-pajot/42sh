@@ -6,7 +6,7 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 14:50:45 by bpajot       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 16:50:14 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 14:29:32 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ int				ft_doublon(char *line, char **arg, int j)
 }
 
 /*
-** return la taille du tableau qui sera la fusuon de env et env2 sans les
+** return la taille du tableau qui sera la fusion de env et env2 sans les
 ** doublons
 */
 
@@ -58,6 +58,10 @@ int				ft_tab_size(char **arg, char **tab_ref)
 
 	i = -1;
 	doublon = 0;
+	if (!arg)
+		return (ft_tab_size2(tab_ref));
+	if (!tab_ref)
+		return (ft_tab_size2(arg));
 	while (arg[++i])
 		doublon += (tab_ref && (ft_doublon(arg[i], tab_ref, -1) ||
 					ft_doublon(arg[i], arg, i))) ? 1 : 0;
@@ -78,16 +82,16 @@ static int		ft_env3(t_parse *p, char **arg, char **env, int i)
 	if (arg[i % 100])
 	{
 		if (check_builtin(&arg[i % 100]))
-			run_builtin_fork(p, &arg[i % 100], &env, i / 100);
+			run_builtin(p, &arg[i % 100], &env, i / 100);
 		else
 		{
 			pid = fork();
 			if (pid == 0)
-				ft_execve(p, i % 100 + i / 100, &env);
+				ft_execve(p, i, &env);
 			else if (pid > 0)
 			{
 				waitpid(pid, &status, WUNTRACED);
-				ft_ret_display(p, pid, status, p->arg[i % 100 + i / 100]);
+				ft_ret_display(p, pid, status);
 			}
 		}
 		return (p->ret);

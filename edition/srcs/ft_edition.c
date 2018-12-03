@@ -6,16 +6,26 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/19 16:17:54 by kcabus       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 11:58:00 by kcabus      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/03 11:06:34 by kcabus      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_edition.h"
 
+static char	*ft_not_found(t_navig *n)
+{
+	ft_strdel(&(n->s));
+	ft_strdel(&(n->s_save));
+	ft_strdel(&(n->pattern));
+	n->statut = 0;
+	return (NULL);
+}
+
 static char	*ft_ctrl_d(t_navig *n)
 {
 	ft_strdel(&(n->s));
+	ft_strdel(&(n->s_save));
 	n->s = ft_strdup("exit");
 	if (!(n->err = ft_push_enter(n)))
 		return (NULL);
@@ -32,7 +42,8 @@ static char	*ft_ctrl_d(t_navig *n)
 
 static int	ft_whilesuite(t_navig *n, char *buf)
 {
-	if (KEY_CODE_DIR || KEY_CODE_DEL || KEY_CODE_ALT || IS_PRINTABLE)
+	if (KEY_CODE_DIR || KEY_CODE_DEL || KEY_CODE_ALT ||
+	IS_PRINTABLE || KEY_CODE_TAB)
 	{
 		if (!(ft_key_code(n, buf)))
 			return (0);
@@ -51,7 +62,6 @@ char		*ft_lance_edit(t_navig *n)
 {
 	char		buf[5];
 
-	ft_x_change(n, MOVE_RIGHT);
 	while (1)
 	{
 		while (ft_verif_term_size(n) < 0)
@@ -59,8 +69,10 @@ char		*ft_lance_edit(t_navig *n)
 				return (NULL);
 		ft_bzero(buf, 5);
 		read(0, buf, 4);
-		if (buf[0] == 10 && !buf[1])
+		if (KEY_CODE_ENTER)
 		{
+			if (ft_parse_excl(n) == EVENT_NO_FOUND)
+				return (ft_not_found(n));
 			n->err = ft_push_enter(n);
 			break ;
 		}
@@ -72,7 +84,6 @@ char		*ft_lance_edit(t_navig *n)
 	if (n->err < 1)
 		return (NULL);
 	ft_strdel(&(n->s_save));
-	n->statut = 0;
 	return (n->s);
 }
 
@@ -91,11 +102,13 @@ char		*ft_edition(char *prompt)
 
 	str = NULL;
 	if (!(g_nav.err = ft_init_term(&(g_nav.t))))
-		return (NULL);
+		return (ft_strdup("exit"));
 	if (!(g_nav.err = ft_init_nav(&g_nav, prompt)))
-		return (NULL);
+		return (ft_strdup("exit"));
 	signal(SIGWINCH, ft_signal_size);
+	ft_x_change(&g_nav, MOVE_RIGHT);
 	str = ft_lance_edit(&g_nav);
+	g_nav.statut = 0;
 	g_nav.t = ft_default_edit(g_nav.t);
 	return (str);
 }

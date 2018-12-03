@@ -6,22 +6,35 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/12 16:27:53 by kcabus       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/03 15:55:02 by kcabus      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/30 11:18:24 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_edition.h"
 
-char	*ft_give_hist(int i, t_hist *list)
+static t_hist	*ft_loop_hist(t_hist *h, int id)
 {
-	static t_hist	*h = NULL;
-
-	if (i == 0)
-		h = list;
-	else if (i == 1 && h->next)
+	while (id && h)
+	{
 		h = h->next;
-	else if (i == -1 && h->prev)
+		id--;
+	}
+	return (h);
+}
+
+char			*ft_give_hist(int i, int id)
+{
+	t_hist	*h;
+
+	h = NULL;
+	h = ft_close_hist(GET_HIST, NULL);
+	h = ft_loop_hist(h, id);
+	if (!h)
+		return (NULL);
+	else if (i == NEXT_HIST && h->next)
+		h = h->next;
+	else if (i == PREV_HIST && h->prev)
 		h = h->prev;
 	else
 		return (NULL);
@@ -34,4 +47,8 @@ char	*ft_give_hist(int i, t_hist *list)
 ** i == -1 && il y a un maillon avant -> prev
 ** sinon on NULL
 ** et on revoie le char * correspondant a l'historique demandé
+*/
+
+/*
+** TODO: var static a remettre a zero
 */

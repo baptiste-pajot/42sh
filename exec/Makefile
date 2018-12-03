@@ -6,7 +6,7 @@
 #    By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/04/06 14:53:11 by kcabus       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/14 11:58:11 by kcabus      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/12/03 09:39:39 by bpajot      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -29,31 +29,50 @@ INC = -I $(INC_PATH) -I $(LIB_PATH)
 
 OBJ_NAME = $(N_SRCS:.c=.o)
 
-N_SRCS =	and_or.c				\
-			cd.c					\
-			check_bin.c				\
-			check_builtin.c			\
-			echo.c					\
-			env.c					\
-			execve.c				\
-			fg.c					\
-			fork.c					\
-			ft_redir_in.c			\
-			ft_redir_out.c			\
-			getenv.c				\
-			manage_redir.c			\
-			manage_signal.c			\
-			pipes.c					\
-			redir.c					\
-			ret_display.c			\
-			setenv.c				\
+N_SRCS =	and_or.c					\
+			cd.c						\
+			cd_suite.c					\
+			check_bin.c					\
+			check_builtin.c				\
+			check_builtin2.c			\
+			delete_heredoc.c			\
+			echo.c						\
+			env.c						\
+			equal.c						\
+			execve.c					\
+			exit.c						\
+			export.c					\
+			fork.c						\
+			ft_delete_history.c			\
+			ft_dollar.c					\
+			ft_err_hist.c				\
+			ft_history.c				\
+			ft_history_struct.c			\
+			ft_history_struct_suite.c	\
+			ft_history_suite.c			\
+			ft_history_suite2.c			\
+			ft_len_tab.c				\
+			ft_redir_in.c				\
+			ft_redir_out.c				\
+			ft_save_p_env.c				\
+			ft_tilde_dollar.c			\
+			getenv.c					\
+			infos_hist.c				\
+			manage_redir.c				\
+			manage_signal.c				\
+			pipes.c						\
+			redir.c						\
+			ret_display.c				\
+			setenv.c					\
+			set.c						\
+			unset.c						\
 			unsetenv.c
 
 all : $(NAME)
 
 $(NAME):	$(OBJ)
 			@ar rc $(NAME) $(OBJ) 
-			@printf "\033[35m exec OK ! \n\033[0m"
+			@printf "\033[35;5m exec OK ! \n\033[0m"
 
 $(OBJ_PATH)%.o:	$(SRC_PATH)%.c
 				@mkdir -p $(OBJ_PATH)

@@ -6,37 +6,38 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/12 16:32:16 by kcabus       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/03 13:57:34 by kcabus      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/29 13:56:42 by kcabus      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_edition.h"
 
-static void			ft_free_hist(t_hist *h)
+void				ft_free_hist(t_hist **h)
 {
-	if (!h)
+	if (!h || !*h)
 		return ;
-	ft_free_hist(h->next);
-	h->next = NULL;
-	if (h->str)
-		ft_strdel(&(h->str));
-	h->prev = NULL;
-	free(h);
+	ft_free_hist(&((*h)->next));
+	if ((*h)->str)
+		ft_strdel(&((*h)->str));
+	free(*h);
+	*h = NULL;
 }
 
 t_hist				*ft_close_hist(int i, t_hist *list)
 {
 	static t_hist	*h = NULL;
 
-	if (i == 0)
+	if (i == SAVE_HIST)
 		h = list;
-	if (i == CLOSE_HIST)
+	else if (i == CLOSE_HIST)
 	{
-		ft_free_hist(h);
+		ft_list_to_file();
+		ft_free_hist(&h);
+		h = NULL;
 		ft_copy_paste(NULL, NULL, 1);
 	}
-	else
+	else if (i == GET_HIST)
 		return (h);
 	return (NULL);
 }

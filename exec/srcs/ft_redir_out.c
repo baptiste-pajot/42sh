@@ -6,7 +6,7 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/27 11:53:11 by kcabus       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 15:54:03 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/03 11:49:50 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,7 +89,7 @@ static int		ft_fd_redir(t_parse *p, int *i, char **env, int n)
 }
 
 /*
-** ft_redir_outi2 : gere les differentes redirections de sortie >, >>, >&
+** ft_redir_out2 : gere les differentes redirections de sortie >, >>, >&
 ** gestion de la redirection "n>&m"
 */
 

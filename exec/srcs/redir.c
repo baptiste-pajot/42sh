@@ -6,7 +6,7 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/23 13:32:47 by bpajot       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 15:54:52 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/03 11:49:14 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,6 +91,7 @@ static int		ft_redir_heredoc(t_parse *p, int *i, char **env)
 	}
 	ft_strdel(&home);
 	ft_strdel(&tmp);
+	delete_heredoc(path);
 	ft_strdel(&path);
 	return (fd);
 }
@@ -122,8 +123,8 @@ void			ft_redir(t_parse *p, int *redir_lim, char **env,
 				else if (ft_strchr(p->arg[i], '<'))
 					fd = ft_redir_in(p, &i, env);
 			}
+			if (fd < 0)
+				exit(1);
 		}
 	}
-	if (fd < 0)
-		exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 11:15:08 by bpajot       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 15:59:16 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/27 15:32:11 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ static int			*create_tab_pipe(t_parse *p, int i, int nb_pipe,
 	tab_pipe = (int*)malloc(sizeof(int) * (nb_pipe + 2));
 	tab_pipe[0] = i;
 	j = 1;
-	while (p->arg[i] && !ft_strchr(p->arg_id[i], SEMICOLON))
+	while (p->arg[i] && p->arg_id[i] && p->arg_id[i][0] < AND)
 	{
 		if (ft_strchr(p->arg_id[i], PIPE))
 			tab_pipe[j++] = ++i;
@@ -67,11 +67,17 @@ static void			ft_manage_pipe2(t_parse *p, int begin, char ***p_env, int i)
 	ft_memdel((void**)&tab_pipe);
 }
 
+/*
+** remplacement des ~ et $ avec les variables d'env ou locales apres la gestion
+** des && || et avant celle des pipes
+*/
+
 void				ft_manage_pipe(t_parse *p, int begin, char ***p_env)
 {
 	int		i;
 
 	i = begin;
+	ft_tilde_dollar(p, begin, p_env);
 	if (p->arg[i] && !ft_strchr(p->arg_id[i], SEMICOLON) &&
 		!ft_strchr(p->arg_id[i], AND) && !ft_strchr(p->arg_id[i], OR))
 		ft_manage_pipe2(p, begin, p_env, i);

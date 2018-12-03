@@ -6,40 +6,38 @@
 #    By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/08/22 09:27:21 by bpajot       #+#   ##    ##    #+#        #
-#    Updated: 2018/10/15 13:41:12 by bpajot      ###    #+. /#+    ###.fr      #
+<<<<<<< HEAD
+#    Updated: 2018/11/27 14:16:54 by yoginet     ###    #+. /#+    ###.fr      #
+=======
+#    Updated: 2018/11/27 14:56:46 by bpajot      ###    #+. /#+    ###.fr      #
+>>>>>>> 4967cdec886e2e28295162a93a51e0db4ca3fde6
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 kcabus :
-- gestion tabulation avec Ctrl+v Tab ?
-- gestion /n etc
 
 bpajot :
-- gestion des exceptions plus propre pour sigpipe
-- gestion du fork pour exit setenv unsetenv cd
-- gestion du ctrl-D pour les commandes avec entree standard ouvert
-- echo $a$b $a"$b"
-- $ a refaire invalid read size pour une variable unset plus cd bizarre
-- cat << kk > l < dddd > test ne pas creer test car erreur avant
-- echo " dquote> \ dquote>"
 - > test redir sans commandes
-- exit avec && || a opti
-- cd gestion lien symbolique
-- revoir fg plus safe emacs ou autre
-- afficher message si PATH=/ et commande not found
-- env a revoir pour env -i ls et env env -i ls
 
 other :
-- leaks  voir prk 32leaks avec valgrind + still reachable ?
-- norminette 
+- leaks
+- norminette
 - arg derriere redir a gerer ?
-- effacer .heredoc
-- cd -P -L
+- effacer .heredoc                  > OK
+- cd -P -L                          > OK
 - echo -n -e -E
 - env ???
-- gestion propre ctrl-z pour cat ou emacs??
 
+
+history :
+- variables locales -> 1-HISTSIZE, 2-HISTFILE, 3-HISTFILESIZE
+		----> exec/srcs/infos_hist.c --> il faut recuperer les valeurs dans les variables set
+		1- Taille de l'historique, verifier la taille a chaque coup de boucle et conservation de l'id
+		2- Localisation du fichier, si erreur mettre en place un define pour loc par defaut
+		3- Lors de la save limiter la taille de save
+		Pour avoir HISSIZE, HISTFILE .... ---->  exec/srcs/infos_hist.c
+		Ajouter booleen pour savoir si la ligne de l'historique vient de la session en cour ou du fichier
 
 bonus :
 - kcabus history et !
@@ -48,4 +46,5 @@ bonus :
 _______________________________________________________________________________
 nota-bene :
 - le prompt du bash est masqué par le 2> /dev/null
+- SEGFAULT et comportement incohérent sur "./42sh | cat -e"
 _______________________________________________________________________________

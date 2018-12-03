@@ -6,7 +6,7 @@
 /*   By: kcabus <kcabus@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 10:59:08 by bpajot       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 13:44:50 by bpajot      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/03 09:48:48 by bpajot      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,7 +100,6 @@ static void		ft_fork_shell2(t_parse *p, int *tab_pipe, char ***p_env,
 		int nb_pipe)
 {
 	int			*tab_pid;
-	int			last_pid;
 	int			**tab_pipe_fd;
 	int			status;
 	int			i;
@@ -116,11 +115,14 @@ static void		ft_fork_shell2(t_parse *p, int *tab_pipe, char ***p_env,
 	}
 	i = -1;
 	while (tab_pid[++i])
+	{
 		waitpid(tab_pid[i], &status, WUNTRACED);
-	last_pid = tab_pid[--i];
+		if (WIFSTOPPED(status) && WSTOPSIG(status) == 18)
+			kill(tab_pid[i], 9);
+	}
+	ft_ret_display(p, tab_pid[--i], status);
 	ft_memdel((void**)&tab_pid);
 	ft_memdel_tab_pipe_fd(tab_pipe_fd);
-	ft_ret_display(p, last_pid, status, p->arg[tab_pipe[0]]);
 }
 
 /*
@@ -133,14 +135,17 @@ void			ft_fork_shell(t_parse *p, int *tab_pipe, char ***p_env,
 		int nb_pipe)
 {
 	char			**tab_com;
+	char			*exec;
 
-	if (!nb_pipe && (ft_strequ(p->arg[tab_pipe[0]], "cd") ||
-		ft_strequ(p->arg[tab_pipe[0]], "setenv") ||
-		ft_strequ(p->arg[tab_pipe[0]], "unsetenv")))
+	exec = NULL;
+	if (ft_check_all_exec(p, tab_pipe, p_env))
+		;
+	else if (!nb_pipe && check_builtin2(&(p->arg[tab_pipe[0]])))
 	{
 		tab_com = manage_redir(p, tab_pipe[0], p_env, 1);
-		run_builtin(p, tab_com, p_env);
+		run_builtin_free(p, tab_com, p_env, tab_pipe[0]);
 	}
 	else
 		ft_fork_shell2(p, tab_pipe, p_env, nb_pipe);
+	ft_memdel((void**)&exec);
 }
